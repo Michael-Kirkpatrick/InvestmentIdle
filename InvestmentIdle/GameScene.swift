@@ -36,13 +36,22 @@ class GameScene: SKScene {
         self.addChild(header)
         
         let lemonadeStand = LemonadeStand(level: 1)
-        let lem2 = LemonadeStand(level: 34)
+        let cryptoMiner = CryptoMiner(level: 1)
+        let stockTrader = StockTradingAlgorithm(level: 1)
+        let scalpingBot = ScalpingBot(level: 1)
+        let startUp = StartUp(level: 1)
         
         let investmentUI = createinvestmentUI(investment: lemonadeStand)
-        let lem2UI = createinvestmentUI(investment: lem2)
+        let cryptoMinerUI = createinvestmentUI(investment: cryptoMiner)
+        let stockTraderUI = createinvestmentUI(investment: stockTrader)
+        let scalpingBotUI = createinvestmentUI(investment: scalpingBot)
+        let startUpUI = createinvestmentUI(investment: startUp)
         
         self.addChild(investmentUI)
-        self.addChild(lem2UI)
+        self.addChild(cryptoMinerUI)
+        self.addChild(stockTraderUI)
+        self.addChild(scalpingBotUI)
+        self.addChild(startUpUI)
     }
     
     func createHeaderUI() -> SKShapeNode {

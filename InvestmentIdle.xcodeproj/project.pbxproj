@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84A2C8C82624D9E2004A34AD /* CryptoMiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */; };
+		84A2C8CF2624DB6B004A34AD /* StockTradingAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */; };
+		84A2C8D22624DD61004A34AD /* ScalpingBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8D12624DD61004A34AD /* ScalpingBot.swift */; };
+		84A2C8D92624DF04004A34AD /* StartUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8D82624DF04004A34AD /* StartUp.swift */; };
 		B4C447A1261A2CCC00BB0DCA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C447A0261A2CCC00BB0DCA /* AppDelegate.swift */; };
 		B4C447A3261A2CCC00BB0DCA /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4C447A2261A2CCC00BB0DCA /* GameScene.sks */; };
 		B4C447A5261A2CCC00BB0DCA /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4C447A4261A2CCC00BB0DCA /* Actions.sks */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoMiner.swift; sourceTree = "<group>"; };
+		84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTradingAlgorithm.swift; sourceTree = "<group>"; };
+		84A2C8D12624DD61004A34AD /* ScalpingBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalpingBot.swift; sourceTree = "<group>"; };
+		84A2C8D82624DF04004A34AD /* StartUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUp.swift; sourceTree = "<group>"; };
 		B4C4479D261A2CCC00BB0DCA /* InvestmentIdle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InvestmentIdle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4C447A0261A2CCC00BB0DCA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4C447A2261A2CCC00BB0DCA /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -71,9 +79,13 @@
 				B4C447A2261A2CCC00BB0DCA /* GameScene.sks */,
 				B4C447A4261A2CCC00BB0DCA /* Actions.sks */,
 				B4C447A6261A2CCC00BB0DCA /* GameScene.swift */,
+				84A2C8D82624DF04004A34AD /* StartUp.swift */,
+				84A2C8D12624DD61004A34AD /* ScalpingBot.swift */,
+				84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */,
 				B4C447C1261A77BF00BB0DCA /* Player.swift */,
 				B4C447BB261A53A200BB0DCA /* Investment.swift */,
 				B4C447BE261A576800BB0DCA /* LemonadeStand.swift */,
+				84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */,
 				B4C447A8261A2CCC00BB0DCA /* GameViewController.swift */,
 				B4C447AA261A2CCC00BB0DCA /* Main.storyboard */,
 				B4C447AD261A2CCD00BB0DCA /* Assets.xcassets */,
@@ -154,7 +166,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A2C8C82624D9E2004A34AD /* CryptoMiner.swift in Sources */,
+				84A2C8D92624DF04004A34AD /* StartUp.swift in Sources */,
 				B4C447BF261A576800BB0DCA /* LemonadeStand.swift in Sources */,
+				84A2C8D22624DD61004A34AD /* ScalpingBot.swift in Sources */,
+				84A2C8CF2624DB6B004A34AD /* StockTradingAlgorithm.swift in Sources */,
 				B4C447BC261A53A200BB0DCA /* Investment.swift in Sources */,
 				B4C447A7261A2CCC00BB0DCA /* GameScene.swift in Sources */,
 				B4C447A9261A2CCC00BB0DCA /* GameViewController.swift in Sources */,
