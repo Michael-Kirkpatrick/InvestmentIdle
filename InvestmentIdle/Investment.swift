@@ -22,21 +22,23 @@ class InvestmentClass {
         self.title = title
         self.incomeFunction = incomeFunction
     }
-    
+
     func generateMoney() {
-        InvestmentClass.threadQueue.async {
-            Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.incrementPlayerMoney), userInfo: nil, repeats: true)
-        }
+        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.incrementPlayerMoney), userInfo: nil, repeats: true)
     }
     
     @objc func incrementPlayerMoney() {
-        Player.sharedPlayer.incrementMoney(amount: self.incomeFunction(self.level))
-        print(Player.sharedPlayer.getMoney())
+        InvestmentClass.threadQueue.async {
+            Player.sharedPlayer.incrementMoney(amount: self.incomeFunction(self.level))
+            DispatchQueue.main.async {
+                UIHelper.updateHeaderLabel()
+            }
+        }
     }
     
 }
 
 // Use protocol to enforce "virtual" type methods that aren't implemented in this class but must be implemented in subclasses
 protocol InvestmentProtocol {
-    func calcIncomePerTenSeconds(level: UInt) -> UInt
+    static func calcIncomePerTenSeconds(level: UInt) -> UInt
 }
