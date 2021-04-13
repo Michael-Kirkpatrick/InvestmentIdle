@@ -10,7 +10,7 @@ import Foundation
 class StartUp: Investment {
     
     static func calcIncomePerTenSeconds(level : UInt) -> UInt {
-        return level
+        return level * 100
     }
     
     init(level: UInt) {

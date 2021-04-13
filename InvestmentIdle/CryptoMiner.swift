@@ -7,14 +7,14 @@
 
 import Foundation
 
-//class CryptoMiner: Investment {
-//    
-//    init(level: UInt) {
-//        super.init(incomePerTenSeconds: 0, level: level, title: "Crypto Miner")
-//        self.incomePerTenSeconds = calcIncomePerTenSeconds(level: self.level)
-//    }
-//    
-//    func calcIncomePerTenSeconds(level : UInt) -> UInt {
-//        return level
-//    }
-//}
+class CryptoMiner: Investment {
+    
+    static func calcIncomePerTenSeconds(level : UInt) -> UInt {
+        return level * 50
+    }
+    
+    init(level: UInt) {
+        super.init(incomePerTenSeconds: 0, level: level, title: "Crypto Miner", incomeFunction: CryptoMiner.calcIncomePerTenSeconds)
+        self.incomePerTenSeconds = CryptoMiner.calcIncomePerTenSeconds(level: self.level)
+    }
+}

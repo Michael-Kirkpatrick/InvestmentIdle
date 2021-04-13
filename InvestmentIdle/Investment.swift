@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SpriteKit
+import GameplayKit
 
 typealias Investment = InvestmentClass & InvestmentProtocol
 
@@ -14,6 +16,8 @@ class InvestmentClass {
     var level : UInt
     var incomePerTenSeconds : UInt
     let incomeFunction:(_ level: UInt) -> UInt
+    private var loadingBar: SKShapeNode?
+    private var statusBar: SKShapeNode?
     static let threadQueue = DispatchQueue(label: "generateQueue", attributes: .concurrent)
     
     init(incomePerTenSeconds : UInt, level : UInt, title : String, incomeFunction:@escaping (_ level : UInt) -> UInt) {
@@ -23,9 +27,24 @@ class InvestmentClass {
         self.incomeFunction = incomeFunction
     }
 
-    func generateMoney() {
+    func generateMoney(scene: SKScene) {
         Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.incrementPlayerMoney), userInfo: nil, repeats: true)
+        let frame = scene.childNode(withName: self.title) as! SKShapeNode
+        statusBar = frame.childNode(withName: self.title + "StatusBar") as? SKShapeNode
+        loadingBar = statusBar?.childNode(withName: self.title + "LoadingBar") as? SKShapeNode
+        Timer.scheduledTimer(timeInterval: 1.0 / 30, target: self, selector: #selector(self.changeLoadingBar), userInfo: nil, repeats: true)
     }
+    
+    @objc func changeLoadingBar() {
+        loadingBar?.xScale += 1 / 300
+        let xPos = -(statusBar?.frame.width)!/2+loadingBar!.frame.width/2
+        loadingBar!.position = CGPoint(x: xPos+1, y:0)
+        if(loadingBar!.xScale > 1) {
+            loadingBar?.xScale = 0
+            loadingBar!.position = CGPoint(x: xPos+1, y:0)
+        }
+    }
+    
     
     @objc func incrementPlayerMoney() {
         InvestmentClass.threadQueue.async {

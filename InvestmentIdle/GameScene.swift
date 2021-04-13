@@ -31,24 +31,29 @@ class GameScene: SKScene {
         let header = UIHelper.createHeaderUI()
         self.addChild(header)
         
-//        let lemonadeStand = LemonadeStand(level: 1)
-//        let cryptoMiner = CryptoMiner(level: 1)
-//        let stockTrader = StockTradingAlgorithm(level: 1)
-//        let scalpingBot = ScalpingBot(level: 1)
-        let startUp = StartUp(level: 25)
-        startUp.generateMoney()
+        let lemonadeStand = LemonadeStand(level: 1)
+        let scalpingBot = ScalpingBot(level: 1)
+        let cryptoMiner = CryptoMiner(level: 1)
+        let stockTrader = StockTradingAlgorithm(level: 1)
+        let startUp = StartUp(level: 1)
         
-//        let investmentUI = createinvestmentUI(investment: lemonadeStand)
-//        let cryptoMinerUI = createinvestmentUI(investment: cryptoMiner)
-//        let stockTraderUI = createinvestmentUI(investment: stockTrader)
-//        let scalpingBotUI = createinvestmentUI(investment: scalpingBot)
+        let investmentUI = createinvestmentUI(investment: lemonadeStand)
+        let scalpingBotUI = createinvestmentUI(investment: scalpingBot)
+        let stockTraderUI = createinvestmentUI(investment: stockTrader)
+        let cryptoMinerUI = createinvestmentUI(investment: cryptoMiner)
         let startUpUI = createinvestmentUI(investment: startUp)
         
-//        self.addChild(investmentUI)
-//        self.addChild(cryptoMinerUI)
-//        self.addChild(stockTraderUI)
-//        self.addChild(scalpingBotUI)
+        self.addChild(investmentUI)
+        self.addChild(cryptoMinerUI)
+        self.addChild(stockTraderUI)
+        self.addChild(scalpingBotUI)
         self.addChild(startUpUI)
+        
+        lemonadeStand.generateMoney(scene: self)
+        scalpingBot.generateMoney(scene: self)
+        cryptoMiner.generateMoney(scene: self)
+        stockTrader.generateMoney(scene: self)
+        startUp.generateMoney(scene: self)
     }
     
     func createinvestmentUI(investment: Investment) -> SKShapeNode {
@@ -92,12 +97,23 @@ class GameScene: SKScene {
         
         // STATUS BAR START
         let statusBar = SKShapeNode(rectOf: spaceToFit)
+        statusBar.name = investment.title + "StatusBar"
         let statusBarSizeOffset = statusBar.calculateAccumulatedFrame().size.height / 2
         let yPosition = -frameSize.height / 2 + frameSize.height * investmentItemSpacingScale + statusBarSizeOffset
         statusBar.position = CGPoint(x: 0, y: yPosition)
         statusBar.strokeColor = SKColor.black
         frame.addChild(statusBar)
         // STATUS BAR END
+        
+        // Loading bar
+        let loadingBar = SKShapeNode(rectOf: CGSize(width: statusBar.frame.width, height: statusBar.frame.height-2))
+        loadingBar.xScale = 0
+        loadingBar.name = investment.title + "LoadingBar"
+        let xPos = -statusBar.frame.width/2+loadingBar.frame.width/2+1
+        loadingBar.position = CGPoint(x: xPos, y:0)
+        loadingBar.fillColor = SKColor.green
+        loadingBar.strokeColor = SKColor.black
+        statusBar.addChild(loadingBar)
         
         // STATUS BAR LABEL START
         let statusBarLabel = SKLabelNode(text: "$\(investment.incomePerTenSeconds)")
