@@ -19,6 +19,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let _ = CurrencyFormatter() // Initialize this helper
+        
         let scene = GameScene(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = true

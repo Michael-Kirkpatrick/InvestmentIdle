@@ -47,12 +47,8 @@ class InvestmentClass {
     
     
     @objc func incrementPlayerMoney() {
-        InvestmentClass.threadQueue.async {
-            Player.sharedPlayer.incrementMoney(amount: self.incomeFunction(self.level))
-            DispatchQueue.main.async {
-                UIHelper.updateHeaderLabel()
-            }
-        }
+        Player.sharedPlayer.incrementMoney(amount: self.incomeFunction(self.level))
+        UIHelper.updateHeaderLabel()
     }
     
 }

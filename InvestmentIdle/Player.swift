@@ -12,15 +12,10 @@ class Player {
     private var money : UInt
     private var investmentLevels : [UInt]
     private let lock = NSLock()
-    private let currencyFormatter = NumberFormatter()
     
     init() {
         money = 0
         investmentLevels = []
-        currencyFormatter.locale = Locale(identifier: "en_US")
-        currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = .currency
-        currencyFormatter.maximumFractionDigits = 0
     }
     
     func incrementMoney(amount: UInt) {
@@ -34,6 +29,6 @@ class Player {
     }
     
     func getMoneyAsString() -> String {
-        return currencyFormatter.string(from: NSNumber(value: money))!
+        return CurrencyFormatter.getFormattedString(value: self.money)
     }
 }

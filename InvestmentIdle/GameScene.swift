@@ -22,10 +22,16 @@ class GameScene: SKScene {
     let investmentItemHeightScale : CGFloat = 1/4
     let statusBarTextScale : CGFloat = 3/4
     
+    var investmentPopup : InvestmentPopup?
+    
     var investmentsPlaced : CGFloat = 0
+    var investments : [String:InvestmentClass] = [:]
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
+        
+        investmentPopup = InvestmentPopup(scene: self)
+        self.addChild((investmentPopup?.getPopup())!)
         
         UIHelper.currentScene = self
         let header = UIHelper.createHeaderUI()
@@ -36,6 +42,8 @@ class GameScene: SKScene {
         let cryptoMiner = CryptoMiner(level: 1)
         let stockTrader = StockTradingAlgorithm(level: 1)
         let startUp = StartUp(level: 1)
+        
+        investments["StartUp"] = startUp
         
         let investmentUI = createinvestmentUI(investment: lemonadeStand)
         let scalpingBotUI = createinvestmentUI(investment: scalpingBot)
@@ -140,12 +148,12 @@ class GameScene: SKScene {
             let theNode = self.atPoint(location)
             
             // Load InvestmentScene for the given investment
-            if theNode.name == "Lemonade Stand" {
-                let transition = SKTransition.moveIn(with:SKTransitionDirection.right, duration: 1)
-                let investmentScene = InvestmentScene(size: self.size)
-                self.view?.presentScene(investmentScene, transition: transition)
+            if theNode.name == "StartUp" || theNode.parent?.name == "StartUp" {
+                investmentPopup?.displayFrame(investment: investments["StartUp"]!)
             } else if theNode.name == leaderBoardButtonName || theNode.parent?.name == leaderBoardButtonName {
                 GameCenter.displayLeaderboard(scene: self)
+            } else if (theNode.name == investmentPopup?.closeButtonName || theNode.parent?.name == investmentPopup?.closeButtonName) {
+                investmentPopup?.hideFrame()
             }
             
         }
