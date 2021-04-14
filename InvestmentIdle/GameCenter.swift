@@ -128,9 +128,9 @@ class GameCenter {
     
     static func displayLeaderboard(scene: SKScene) {
         let gcVC = GKGameCenterViewController(state: .leaderboards)
-        gcVC.gameCenterDelegate = (scene.view!.window!.rootViewController as! GameViewController)
-        gcVC.leader
-        gcVC.leaderboardIdentifier = self.leaderboardID
-        present(gcVC, animated: true, completion: nil)
+//        gcVC.gameCenterDelegate = (scene.view!.window!.rootViewController as! GameViewController)
+//        gcVC.leader
+//        gcVC.leaderboardIdentifier = self.leaderboardID
+//        present(gcVC, animated: true, completion: nil)
     }
 }
