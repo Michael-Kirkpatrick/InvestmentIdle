@@ -144,7 +144,10 @@ class GameScene: SKScene {
                 let transition = SKTransition.moveIn(with:SKTransitionDirection.right, duration: 1)
                 let investmentScene = InvestmentScene(size: self.size)
                 self.view?.presentScene(investmentScene, transition: transition)
+            } else if theNode.name == leaderBoardButtonName || theNode.parent?.name == leaderBoardButtonName {
+                GameCenter.displayLeaderboard(scene: self)
             }
+            
         }
     }
 }

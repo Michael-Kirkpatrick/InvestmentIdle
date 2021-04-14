@@ -12,6 +12,9 @@ let headerHeightScale : CGFloat = 1/10
 let headerEdgeSafety : CGFloat = 10
 let headerSpacingXScale : CGFloat = 1/6
 let headerSpacingYScale : CGFloat = 1/3
+let trophyWidth : CGFloat = 1/15
+let trophyHeight : CGFloat = 0.75
+let leaderBoardButtonName = "leaderButton"
 
 class UIHelper {
     static var currentScene : SKScene?
@@ -37,6 +40,17 @@ class UIHelper {
         label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.bottom
         frame.addChild(label)
         
+        let size = min(frameSize.width * trophyWidth, frameSize.height * trophyHeight)
+        let leaderBorder = SKShapeNode(rectOf: CGSize(width: size, height: size))
+        leaderBorder.name = leaderBoardButtonName
+        leaderBorder.position = CGPoint(x: frameSize.width/2 - headerEdgeSafety - size/2, y: 0)
+        leaderBorder.strokeColor = SKColor.black
+        frame.addChild(leaderBorder)
+        
+        let leaderButton = SKSpriteNode(imageNamed: "trophyIcon")
+        leaderButton.size = CGSize(width: size * 0.80, height: size * 0.80)
+        leaderButton.position = CGPoint(x: 0, y: 0)
+        leaderBorder.addChild(leaderButton)
         return frame
     }
 

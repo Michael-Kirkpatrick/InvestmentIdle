@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		847A93B3262764F80050FBED /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A93B2262764F80050FBED /* GameCenter.swift */; };
 		84A2C8C82624D9E2004A34AD /* CryptoMiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */; };
 		84A2C8CF2624DB6B004A34AD /* StockTradingAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */; };
 		84A2C8D22624DD61004A34AD /* ScalpingBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8D12624DD61004A34AD /* ScalpingBot.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		847A93B2262764F80050FBED /* GameCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenter.swift; sourceTree = "<group>"; };
 		84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoMiner.swift; sourceTree = "<group>"; };
 		84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTradingAlgorithm.swift; sourceTree = "<group>"; };
 		84A2C8D12624DD61004A34AD /* ScalpingBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalpingBot.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				B43B9F102624DA5D00F9910A /* InvestmentScene.swift */,
 				B43B9F182624DFEA00F9910A /* UIHelper.swift */,
 				B4C447C1261A77BF00BB0DCA /* Player.swift */,
+				847A93B2262764F80050FBED /* GameCenter.swift */,
 				B4C447BB261A53A200BB0DCA /* Investment.swift */,
 				B4C447BE261A576800BB0DCA /* LemonadeStand.swift */,
 				84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */,
@@ -174,6 +177,7 @@
 			files = (
 				84A2C8C82624D9E2004A34AD /* CryptoMiner.swift in Sources */,
 				84A2C8D92624DF04004A34AD /* StartUp.swift in Sources */,
+				847A93B3262764F80050FBED /* GameCenter.swift in Sources */,
 				B4C447BF261A576800BB0DCA /* LemonadeStand.swift in Sources */,
 				84A2C8D22624DD61004A34AD /* ScalpingBot.swift in Sources */,
 				84A2C8CF2624DB6B004A34AD /* StockTradingAlgorithm.swift in Sources */,

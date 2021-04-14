@@ -8,8 +8,14 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import GameKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, GKGameCenterControllerDelegate {
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +26,7 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+        
     }
 
     override var prefersStatusBarHidden: Bool {
