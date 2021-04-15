@@ -8,13 +8,16 @@
 import Foundation
 
 class LemonadeStand: Investment {
+    
+    static func calcUpgradeCost(level: UInt) -> UInt {
+        return level * 2 + 1
+    }
 
     static func calcIncomePerTenSeconds(level : UInt) -> UInt {
         return level
     }
     
     init(level: UInt) {
-        super.init(incomePerTenSeconds: 0, level: level, title: "Lemonade Stand", incomeFunction: LemonadeStand.calcIncomePerTenSeconds)
-        self.incomePerTenSeconds = LemonadeStand.calcIncomePerTenSeconds(level: self.level)
+        super.init(level: level, title: "Lemonade Stand", incomeFunction: LemonadeStand.calcIncomePerTenSeconds, upgradeCostFunction: LemonadeStand.calcUpgradeCost)
     }
 }

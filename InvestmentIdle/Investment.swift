@@ -15,16 +15,20 @@ class InvestmentClass {
     let title : String
     var level : UInt
     var incomePerTenSeconds : UInt
-    let incomeFunction:(_ level: UInt) -> UInt
+    var upgradeCost : UInt
+    private let incomeFunction:(_ level: UInt) -> UInt
+    private let upgradeCostFunction:(_ level: UInt) -> UInt
     private var loadingBar: SKShapeNode?
     private var statusBar: SKShapeNode?
     static let threadQueue = DispatchQueue(label: "generateQueue", attributes: .concurrent)
     
-    init(incomePerTenSeconds : UInt, level : UInt, title : String, incomeFunction:@escaping (_ level : UInt) -> UInt) {
-        self.incomePerTenSeconds = incomePerTenSeconds
+    init(level : UInt, title : String, incomeFunction:@escaping (_ level : UInt) -> UInt, upgradeCostFunction:@escaping (_ level : UInt) -> UInt) {
+        self.incomePerTenSeconds = incomeFunction(level)
+        self.upgradeCost = upgradeCostFunction(level)
         self.level = level
         self.title = title
         self.incomeFunction = incomeFunction
+        self.upgradeCostFunction = upgradeCostFunction
     }
 
     func generateMoney(scene: SKScene) {
@@ -57,9 +61,24 @@ class InvestmentClass {
         UIHelper.updateHeaderLabel()
     }
     
+    func getIncomeAtNextLevel() -> UInt {
+        return self.incomeFunction(self.level + 1)
+    }
+    
+    func levelUp() -> Bool {
+        let upgraded = Player.sharedPlayer.levelUpInvestment(cost: self.upgradeCost)
+        if upgraded {
+            self.level += 1
+            self.incomePerTenSeconds = self.incomeFunction(self.level)
+            self.upgradeCost = self.upgradeCostFunction(self.level)
+        }
+        return upgraded
+    }
+    
 }
 
 // Use protocol to enforce "virtual" type methods that aren't implemented in this class but must be implemented in subclasses
 protocol InvestmentProtocol {
     static func calcIncomePerTenSeconds(level: UInt) -> UInt
+    static func calcUpgradeCost(level: UInt) -> UInt
 }

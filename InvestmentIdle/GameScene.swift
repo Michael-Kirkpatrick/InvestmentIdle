@@ -22,10 +22,15 @@ class GameScene: SKScene {
     let investmentItemHeightScale : CGFloat = 1/4
     let statusBarTextScale : CGFloat = 3/4
     
+    let levelLabelNameSuffix = "LevelLabel"
+    let incomeLabelNameSuffix = "IncomeLabel"
+    
     var investmentPopup : InvestmentPopup?
     
     var investmentsPlaced : CGFloat = 0
     var investments : [String:InvestmentClass] = [:]
+    
+    private var upgradeInProgress : Bool = false
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -38,12 +43,16 @@ class GameScene: SKScene {
         self.addChild(header)
         
         let lemonadeStand = LemonadeStand(level: 1)
-        let scalpingBot = ScalpingBot(level: 1)
-        let cryptoMiner = CryptoMiner(level: 1)
-        let stockTrader = StockTradingAlgorithm(level: 1)
-        let startUp = StartUp(level: 1)
+        let scalpingBot = ScalpingBot(level: 0)
+        let cryptoMiner = CryptoMiner(level: 0)
+        let stockTrader = StockTradingAlgorithm(level: 0)
+        let startUp = StartUp(level: 0)
         
-        investments["StartUp"] = startUp
+        investments[lemonadeStand.title] = lemonadeStand
+        investments[scalpingBot.title] = scalpingBot
+        investments[stockTrader.title] = stockTrader
+        investments[cryptoMiner.title] = cryptoMiner
+        investments[startUp.title] = startUp
         
         let investmentUI = createinvestmentUI(investment: lemonadeStand)
         let scalpingBotUI = createinvestmentUI(investment: scalpingBot)
@@ -57,11 +66,11 @@ class GameScene: SKScene {
         self.addChild(scalpingBotUI)
         self.addChild(startUpUI)
         
-        lemonadeStand.generateMoney(scene: self)
-        scalpingBot.generateMoney(scene: self)
-        cryptoMiner.generateMoney(scene: self)
-        stockTrader.generateMoney(scene: self)
-        startUp.generateMoney(scene: self)
+        for (_, investment) in investments {
+            if investment.level > 0 {
+                investment.generateMoney(scene: self)
+            }
+        }
     }
     
     func createinvestmentUI(investment: Investment) -> SKShapeNode {
@@ -92,9 +101,10 @@ class GameScene: SKScene {
         // TITLE END
         
         // LEVEL LABEL START
-        let levelLabel = SKLabelNode(text: "Level \(investment.level)")
+        let levelLabel = SKLabelNode(text: "Level: \(investment.level)")
         levelLabel.fontColor = SKColor.black
         levelLabel.fontName = fontName
+        levelLabel.name = investment.title + levelLabelNameSuffix
         
         levelLabel.fontSize *= UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: levelLabel.frame.size)
         let xPosition = -frameSize.width / 2 + frameSize.width * (investmentItemSpacingScale / 2) + levelLabel.frame.width / 2
@@ -124,9 +134,10 @@ class GameScene: SKScene {
         statusBar.addChild(loadingBar)
         
         // STATUS BAR LABEL START
-        let statusBarLabel = SKLabelNode(text: "$\(investment.incomePerTenSeconds)")
+        let statusBarLabel = SKLabelNode(text: CurrencyFormatter.getFormattedString(value: investment.incomePerTenSeconds))
         statusBarLabel.fontColor = SKColor.black
         statusBarLabel.fontName = fontNameLight
+        statusBarLabel.name = investment.title + incomeLabelNameSuffix
         
         spaceToFit.width *= statusBarTextScale
         spaceToFit.height *= statusBarTextScale
@@ -148,14 +159,35 @@ class GameScene: SKScene {
             let theNode = self.atPoint(location)
             
             // Load InvestmentScene for the given investment
-            if theNode.name == "StartUp" || theNode.parent?.name == "StartUp" {
-                investmentPopup?.displayFrame(investment: investments["StartUp"]!)
-            } else if theNode.name == leaderBoardButtonName || theNode.parent?.name == leaderBoardButtonName {
+            for investmentName in investments.keys {
+                if theNode.name == investmentName || theNode.parent?.name == investmentName {
+                    investmentPopup?.displayFrame(investment: investments[investmentName]!)
+                }
+            }
+            if theNode.name == leaderBoardButtonName || theNode.parent?.name == leaderBoardButtonName {
                 GameCenter.shared.displayLeaderboard(scene: self)
             } else if (theNode.name == investmentPopup?.closeButtonName || theNode.parent?.name == investmentPopup?.closeButtonName) {
                 investmentPopup?.hideFrame()
+            } else if (theNode.name == investmentPopup?.upgradeButtonName || theNode.parent?.name == investmentPopup?.upgradeButtonName) {
+                if !upgradeInProgress {
+                    upgradeInProgress = true // Prevent button from registering to level up until all models/views are up to date again
+                    let currentInvestment = investmentPopup?.currentDisplayedInvestment
+                    if let _ = currentInvestment?.levelUp() {
+                        investmentPopup?.updateLabels(investment: currentInvestment!)
+                        UIHelper.updateHeaderLabel()
+                        let frame = self.childNode(withName: currentInvestment!.title)
+                        let levelLabel = frame?.childNode(withName: currentInvestment!.title + levelLabelNameSuffix) as? SKLabelNode
+                        levelLabel!.text = "Level: \(currentInvestment!.level)"
+                        let incomeLabel = frame?.childNode(withName: currentInvestment!.title + incomeLabelNameSuffix) as? SKLabelNode
+                        incomeLabel!.text = CurrencyFormatter.getFormattedString(value: currentInvestment!.incomePerTenSeconds)
+                        
+                        if currentInvestment!.level == 1 { // If we just upgraded to 1, need to start generating money for the first time
+                            currentInvestment!.generateMoney(scene: self)
+                        }
+                    }
+                    upgradeInProgress = false
+                }
             }
-            
         }
     }
 }

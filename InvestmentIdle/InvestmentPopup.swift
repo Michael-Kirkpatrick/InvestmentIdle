@@ -17,6 +17,8 @@ class InvestmentPopup {
     let textHeightScale : CGFloat = 0.07
     
     let closeButtonName = "closeInvestmentPopupButton"
+    let upgradeButtonName = "investmentPopupUpgradeButton"
+    var currentDisplayedInvestment : InvestmentClass?
     
     private let frame : SKShapeNode
     private let title : SKLabelNode
@@ -92,6 +94,7 @@ class InvestmentPopup {
         upgradeButton.fillColor = SKColor.gray
         upgradeButton.position = CGPoint(x: 0, y: frameSize.height / 2 - yOffset - upgradeButton.frame.height / 2)
         upgradeButton.strokeColor = SKColor.black
+        upgradeButton.name = upgradeButtonName
         innerFrame.addChild(upgradeButton)
         yOffset += upgradeButton.frame.height + popupHeightMarginScale * frameSize.height
         
@@ -129,12 +132,12 @@ class InvestmentPopup {
         return frame
     }
     
-    func displayFrame(investment: InvestmentClass) {
+    func updateLabels(investment: InvestmentClass) {
         title.text = investment.title
         level.text = "Level: \(investment.level)"
-        upgradeCost.text = "Upgrade Cost: NEW_FUNC"
+        upgradeCost.text = "Upgrade Cost: \(CurrencyFormatter.getFormattedString(value: investment.upgradeCost))"
         currentIncome.text = "Current Level: \(CurrencyFormatter.getFormattedString(value: investment.incomePerTenSeconds))/10s"
-        nextIncome.text = "Next Level: \(CurrencyFormatter.getFormattedString(value: investment.incomeFunction(investment.level + 1)))/10s"
+        nextIncome.text = "Next Level: \(CurrencyFormatter.getFormattedString(value: investment.getIncomeAtNextLevel()))/10s"
         
         title.fontSize *= UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: title.frame.size)
         let fontSize = min(currentIncome.fontSize * UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: currentIncome.frame.size), nextIncome.fontSize * UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: nextIncome.frame.size), upgradeCost.fontSize * UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: upgradeCost.frame.size))
@@ -142,6 +145,12 @@ class InvestmentPopup {
         upgradeCost.fontSize = fontSize
         currentIncome.fontSize = fontSize
         nextIncome.fontSize = fontSize
+    }
+    
+    func displayFrame(investment: InvestmentClass) {
+        updateLabels(investment: investment)
+        
+        currentDisplayedInvestment = investment
         
         frame.zPosition = 50
         frame.alpha = 1

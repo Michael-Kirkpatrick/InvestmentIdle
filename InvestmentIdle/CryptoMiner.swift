@@ -9,12 +9,15 @@ import Foundation
 
 class CryptoMiner: Investment {
     
+    static func calcUpgradeCost(level: UInt) -> UInt {
+        return level * 500 + 1000
+    }
+    
     static func calcIncomePerTenSeconds(level : UInt) -> UInt {
         return level * 50
     }
     
     init(level: UInt) {
-        super.init(incomePerTenSeconds: 0, level: level, title: "Crypto Miner", incomeFunction: CryptoMiner.calcIncomePerTenSeconds)
-        self.incomePerTenSeconds = CryptoMiner.calcIncomePerTenSeconds(level: self.level)
+        super.init(level: level, title: "Crypto Miner", incomeFunction: CryptoMiner.calcIncomePerTenSeconds, upgradeCostFunction: CryptoMiner.calcUpgradeCost)
     }
 }
