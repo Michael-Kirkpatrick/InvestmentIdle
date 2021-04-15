@@ -8,6 +8,7 @@
 import Foundation
 
 class CryptoMiner: Investment {
+    static let title = "Crypto Miner"
     
     static func calcUpgradeCost(level: UInt) -> UInt {
         return level * 500 + 1000
@@ -18,6 +19,6 @@ class CryptoMiner: Investment {
     }
     
     init(level: UInt) {
-        super.init(level: level, title: "Crypto Miner", incomeFunction: CryptoMiner.calcIncomePerTenSeconds, upgradeCostFunction: CryptoMiner.calcUpgradeCost)
+        super.init(level: level, title: CryptoMiner.title, incomeFunction: CryptoMiner.calcIncomePerTenSeconds, upgradeCostFunction: CryptoMiner.calcUpgradeCost)
     }
 }

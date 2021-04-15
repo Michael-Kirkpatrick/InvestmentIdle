@@ -8,6 +8,7 @@
 import Foundation
 
 class StockTradingAlgorithm: Investment {
+    static let title = "Stock Trading Algorithm"
     
     static func calcUpgradeCost(level: UInt) -> UInt {
         return level * 100 + 200
@@ -18,6 +19,6 @@ class StockTradingAlgorithm: Investment {
     }
     
     init(level: UInt) {
-        super.init(level: level, title: "Stock Trading Algorithm", incomeFunction: StockTradingAlgorithm.calcIncomePerTenSeconds, upgradeCostFunction: StockTradingAlgorithm.calcUpgradeCost)
+        super.init(level: level, title: StockTradingAlgorithm.title, incomeFunction: StockTradingAlgorithm.calcIncomePerTenSeconds, upgradeCostFunction: StockTradingAlgorithm.calcUpgradeCost)
     }
 }

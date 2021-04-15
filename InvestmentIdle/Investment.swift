@@ -66,7 +66,7 @@ class InvestmentClass {
     }
     
     func levelUp() -> Bool {
-        let upgraded = Player.sharedPlayer.levelUpInvestment(cost: self.upgradeCost)
+        let upgraded = Player.sharedPlayer.levelUpInvestment(investment: self)
         if upgraded {
             self.level += 1
             self.incomePerTenSeconds = self.incomeFunction(self.level)

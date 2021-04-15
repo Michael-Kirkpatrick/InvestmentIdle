@@ -8,6 +8,7 @@
 import Foundation
 
 class ScalpingBot: Investment {
+    static let title = "Scalping Bot"
     
     static func calcUpgradeCost(level: UInt) -> UInt {
         return level * 20 + 25
@@ -18,7 +19,7 @@ class ScalpingBot: Investment {
     }
     
     init(level: UInt) {
-        super.init(level: level, title: "Scalping Bot", incomeFunction: ScalpingBot.calcIncomePerTenSeconds, upgradeCostFunction: ScalpingBot.calcUpgradeCost)
+        super.init(level: level, title: ScalpingBot.title, incomeFunction: ScalpingBot.calcIncomePerTenSeconds, upgradeCostFunction: ScalpingBot.calcUpgradeCost)
     }
     
 }

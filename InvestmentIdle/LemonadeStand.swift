@@ -8,6 +8,7 @@
 import Foundation
 
 class LemonadeStand: Investment {
+    static let title = "Lemonade Stand"
     
     static func calcUpgradeCost(level: UInt) -> UInt {
         return level * 2 + 1
@@ -18,6 +19,6 @@ class LemonadeStand: Investment {
     }
     
     init(level: UInt) {
-        super.init(level: level, title: "Lemonade Stand", incomeFunction: LemonadeStand.calcIncomePerTenSeconds, upgradeCostFunction: LemonadeStand.calcUpgradeCost)
+        super.init(level: level, title: LemonadeStand.title, incomeFunction: LemonadeStand.calcIncomePerTenSeconds, upgradeCostFunction: LemonadeStand.calcUpgradeCost)
     }
 }

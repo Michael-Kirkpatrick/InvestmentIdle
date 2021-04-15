@@ -8,6 +8,7 @@
 import Foundation
 
 class StartUp: Investment {
+    static let title = "Start Up"
     
     static func calcUpgradeCost(level: UInt) -> UInt {
         return level * level * 3 + level * 200 + 10000
@@ -18,7 +19,7 @@ class StartUp: Investment {
     }
     
     init(level: UInt) {
-        super.init(level: level, title: "StartUp", incomeFunction: StartUp.calcIncomePerTenSeconds, upgradeCostFunction: StartUp.calcUpgradeCost)
+        super.init(level: level, title: StartUp.title, incomeFunction: StartUp.calcIncomePerTenSeconds, upgradeCostFunction: StartUp.calcUpgradeCost)
     }
 
 }

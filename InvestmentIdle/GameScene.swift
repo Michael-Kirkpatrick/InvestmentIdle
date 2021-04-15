@@ -42,11 +42,16 @@ class GameScene: SKScene {
         let header = UIHelper.createHeaderUI()
         self.addChild(header)
         
-        let lemonadeStand = LemonadeStand(level: 1)
-        let scalpingBot = ScalpingBot(level: 0)
-        let cryptoMiner = CryptoMiner(level: 0)
-        let stockTrader = StockTradingAlgorithm(level: 0)
-        let startUp = StartUp(level: 0)
+        var lemonadeStandLevel = Player.sharedPlayer.getInvestmentLevel(investmentTitle: LemonadeStand.title)
+        if lemonadeStandLevel == 0 { // If 0, that means we have a first-time player, so give them one level in the first investment.
+            lemonadeStandLevel = 1
+            Player.sharedPlayer.incrementInvestmentLevel(investmentTitle: LemonadeStand.title)
+        }
+        let lemonadeStand = LemonadeStand(level: lemonadeStandLevel)
+        let scalpingBot = ScalpingBot(level: Player.sharedPlayer.getInvestmentLevel(investmentTitle: ScalpingBot.title))
+        let cryptoMiner = CryptoMiner(level: Player.sharedPlayer.getInvestmentLevel(investmentTitle: CryptoMiner.title))
+        let stockTrader = StockTradingAlgorithm(level: Player.sharedPlayer.getInvestmentLevel(investmentTitle: StockTradingAlgorithm.title))
+        let startUp = StartUp(level: Player.sharedPlayer.getInvestmentLevel(investmentTitle: StartUp.title))
         
         investments[lemonadeStand.title] = lemonadeStand
         investments[scalpingBot.title] = scalpingBot
