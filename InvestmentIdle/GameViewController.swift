@@ -11,11 +11,6 @@ import GameplayKit
 import GameKit
 
 class GameViewController: UIViewController, GKGameCenterControllerDelegate {
-    
-    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
-        gameCenterViewController.dismiss(animated: true, completion: nil)
-    }
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +23,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
-        
+    }
+    
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {
+        gameCenterViewController.dismiss(animated: true, completion: nil)
+    }
+
+    func displayGameCenterLeaderboards(gcVC: GKGameCenterViewController) {
+        present(gcVC, animated: true, completion: nil)
     }
 
     override var prefersStatusBarHidden: Bool {

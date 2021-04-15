@@ -28,23 +28,29 @@ class InvestmentClass {
     }
 
     func generateMoney(scene: SKScene) {
-        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.incrementPlayerMoney), userInfo: nil, repeats: true)
         let frame = scene.childNode(withName: self.title) as! SKShapeNode
         statusBar = frame.childNode(withName: self.title + "StatusBar") as? SKShapeNode
         loadingBar = statusBar?.childNode(withName: self.title + "LoadingBar") as? SKShapeNode
-        Timer.scheduledTimer(timeInterval: 1.0 / 30, target: self, selector: #selector(self.changeLoadingBar), userInfo: nil, repeats: true)
+        
+        let scaleUp = SKAction.scaleX(to: 1, duration: 10.0)
+        let scaleDown = SKAction.scaleX(to: 0, duration: 0)
+        let moveRight = SKAction.move(to: CGPoint(x: 0, y: 0), duration: 10.0)
+        let moveLeft = SKAction.move(to: CGPoint(x: -(statusBar?.frame.width)! / 2, y: 0), duration: 0)
+        
+        loadingBar?.run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.group([
+                    scaleUp,
+                    moveRight
+                ]),
+                SKAction.run{self.incrementPlayerMoney()},
+                SKAction.group([
+                    scaleDown,
+                    moveLeft
+                ])
+            ])
+        ))
     }
-    
-    @objc func changeLoadingBar() {
-        loadingBar?.xScale += 1 / 300
-        let xPos = -(statusBar?.frame.width)!/2+loadingBar!.frame.width/2
-        loadingBar!.position = CGPoint(x: xPos+1, y:0)
-        if(loadingBar!.xScale > 1) {
-            loadingBar?.xScale = 0
-            loadingBar!.position = CGPoint(x: xPos+1, y:0)
-        }
-    }
-    
     
     @objc func incrementPlayerMoney() {
         Player.sharedPlayer.incrementMoney(amount: self.incomeFunction(self.level))

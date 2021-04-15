@@ -151,7 +151,7 @@ class GameScene: SKScene {
             if theNode.name == "StartUp" || theNode.parent?.name == "StartUp" {
                 investmentPopup?.displayFrame(investment: investments["StartUp"]!)
             } else if theNode.name == leaderBoardButtonName || theNode.parent?.name == leaderBoardButtonName {
-                GameCenter.displayLeaderboard(scene: self)
+                GameCenter.shared.displayLeaderboard(scene: self)
             } else if (theNode.name == investmentPopup?.closeButtonName || theNode.parent?.name == investmentPopup?.closeButtonName) {
                 investmentPopup?.hideFrame()
             }
