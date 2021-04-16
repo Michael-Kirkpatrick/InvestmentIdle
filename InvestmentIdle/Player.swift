@@ -7,15 +7,19 @@
 
 import Foundation
 
+private let MAX_IDLE_TIME : TimeInterval = 86400 // Seconds in a day
+
 class Player: Codable {
     static let sharedPlayer = Player()
     private var money : UInt
     private var investmentLevels : [String : UInt]
+    private var lastSaveDate : Date
     private let lock = NSLock()
     
     init() {
         money = 0
         investmentLevels = [:]
+        lastSaveDate = Date()
     }
     
     func incrementMoney(amount: UInt) {
@@ -66,7 +70,7 @@ class Player: Codable {
     
     // Specify encoding/decoding only of money and investment levels
     private enum CodingKeys: String, CodingKey {
-        case money, investmentLevels
+        case money, investmentLevels, lastSaveDate
     }
     
     func loadPlayer() {
@@ -81,12 +85,38 @@ class Player: Codable {
             let savedPlayer = try jsonDecoder.decode(Player.self, from: data)
             self.money = savedPlayer.money
             self.investmentLevels = savedPlayer.investmentLevels
+            self.lastSaveDate = savedPlayer.lastSaveDate
+            
+            // Calculate offline progression since last save
+            let elapsedTime = min(abs(self.lastSaveDate.timeIntervalSinceNow), MAX_IDLE_TIME)
+            let elapsedGenerationCycles : UInt = UInt(elapsedTime) / 10
+            var moneyGenerated : UInt = 0
+            for (investmentName, investmentLevel) in investmentLevels {
+                switch (investmentName) {
+                case LemonadeStand.title:
+                    moneyGenerated += (LemonadeStand.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+                case ScalpingBot.title:
+                    moneyGenerated += (ScalpingBot.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+                case StockTradingAlgorithm.title:
+                    moneyGenerated += (StockTradingAlgorithm.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+                case CryptoMiner.title:
+                    moneyGenerated += (CryptoMiner.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+                case StartUp.title:
+                    moneyGenerated += (StartUp.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+                default:
+                    print("Unexpected investmentName found in Player's saved investments: \(investmentName)")
+                }
+            }
+            
+            self.incrementMoney(amount: moneyGenerated)
+            
         } catch {
             print("Cannot decode Player data from the archive.")
         }
     }
     
     func savePlayer() {
+        self.lastSaveDate = Date() // Set last save date before saving so that it can be used to calculate offline progression
         let jsonEncoder = JSONEncoder()
         var data = Data()
         do {
