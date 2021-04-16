@@ -166,31 +166,43 @@ class GameScene: SKScene {
             // Load InvestmentScene for the given investment
             for investmentName in investments.keys {
                 if theNode.name == investmentName || theNode.parent?.name == investmentName {
-                    investmentPopup?.displayFrame(investment: investments[investmentName]!)
+                    let background : SKNode = (theNode.name == investmentName) ? theNode : theNode.parent!
+                    UIHelper.simulateButtonPressSync(button: background, codeToRun: {
+                        self.investmentPopup?.displayFrame(investment: self.investments[investmentName]!)
+                    })
                 }
             }
             if theNode.name == leaderBoardButtonName || theNode.parent?.name == leaderBoardButtonName {
-                GameCenter.shared.displayLeaderboard(scene: self)
+                let background : SKNode = (theNode.name == leaderBoardButtonName) ? theNode : theNode.parent!
+                UIHelper.simulateButtonPressSync(button: background, codeToRun: {
+                    GameCenter.shared.displayLeaderboard(scene: self)
+                })
             } else if (theNode.name == investmentPopup?.closeButtonName || theNode.parent?.name == investmentPopup?.closeButtonName) {
-                investmentPopup?.hideFrame()
+                let background : SKNode = (theNode.name == investmentPopup?.closeButtonName) ? theNode : theNode.parent!
+                UIHelper.simulateButtonPressSync(button: background, codeToRun: {
+                    self.investmentPopup?.hideFrame()
+                })
             } else if (theNode.name == investmentPopup?.upgradeButtonName || theNode.parent?.name == investmentPopup?.upgradeButtonName) {
                 if !upgradeInProgress {
-                    upgradeInProgress = true // Prevent button from registering to level up until all models/views are up to date again
-                    let currentInvestment = investmentPopup?.currentDisplayedInvestment
-                    if let _ = currentInvestment?.levelUp() {
-                        investmentPopup?.updateLabels(investment: currentInvestment!)
-                        UIHelper.updateHeaderLabel()
-                        let frame = self.childNode(withName: currentInvestment!.title)
-                        let levelLabel = frame?.childNode(withName: currentInvestment!.title + levelLabelNameSuffix) as? SKLabelNode
-                        levelLabel!.text = "Level: \(currentInvestment!.level)"
-                        let incomeLabel = frame?.childNode(withName: currentInvestment!.title + incomeLabelNameSuffix) as? SKLabelNode
-                        incomeLabel!.text = CurrencyFormatter.getFormattedString(value: currentInvestment!.incomePerTenSeconds)
-                        
-                        if currentInvestment!.level == 1 { // If we just upgraded to 1, need to start generating money for the first time
-                            currentInvestment!.generateMoney(scene: self)
+                    let background : SKNode = (theNode.name == investmentPopup?.upgradeButtonName) ? theNode : theNode.parent!
+                    UIHelper.simulateButtonPressAsync(button: background, codeToRun: {
+                        self.upgradeInProgress = true // Prevent button from registering to level up until all models/views are up to date again
+                        let currentInvestment = self.investmentPopup?.currentDisplayedInvestment
+                        if let _ = currentInvestment?.levelUp() {
+                            self.investmentPopup?.updateLabels(investment: currentInvestment!)
+                            UIHelper.updateHeaderLabel()
+                            let frame = self.childNode(withName: currentInvestment!.title)
+                            let levelLabel = frame?.childNode(withName: currentInvestment!.title + self.levelLabelNameSuffix) as? SKLabelNode
+                            levelLabel!.text = "Level: \(currentInvestment!.level)"
+                            let incomeLabel = frame?.childNode(withName: currentInvestment!.title + self.incomeLabelNameSuffix) as? SKLabelNode
+                            incomeLabel!.text = CurrencyFormatter.getFormattedString(value: currentInvestment!.incomePerTenSeconds)
+                            
+                            if currentInvestment!.level == 1 { // If we just upgraded to 1, need to start generating money for the first time
+                                currentInvestment!.generateMoney(scene: self)
+                            }
                         }
-                    }
-                    upgradeInProgress = false
+                        self.upgradeInProgress = false
+                    })
                 }
             }
         }

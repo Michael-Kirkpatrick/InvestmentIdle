@@ -63,5 +63,23 @@ class UIHelper {
         let headerLabel = header.childNode(withName: "PlayerMoney") as! SKLabelNode
         headerLabel.text = Player.sharedPlayer.getMoneyAsString()
     }
+    
+    static func simulateButtonPressSync(button: SKNode, codeToRun: @escaping () -> ()) {
+        button.run(SKAction.sequence([
+            SKAction.scale(to: 0.8, duration: 0.1),
+            SKAction.scale(to: 1, duration: 0.1),
+            SKAction.run { codeToRun() }
+        ]))
+    }
+    
+    static func simulateButtonPressAsync(button: SKNode, codeToRun: @escaping () -> ()) {
+        button.run(SKAction.group([
+            SKAction.sequence([
+                SKAction.scale(to: 0.8, duration: 0.1),
+                SKAction.scale(to: 1, duration: 0.1)
+            ]),
+            SKAction.run { codeToRun() }
+        ]))
+    }
 }
 

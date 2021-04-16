@@ -61,6 +61,10 @@ class Player: Codable {
         return self.investmentLevels[investmentTitle] ?? 0
     }
     
+    func hasProgressedOffline() -> Bool {
+        return abs(self.lastSaveDate.timeIntervalSinceNow) > 10
+    }
+    
     // MARK: Persistent Data
     private let fileName = "InvestmentIdle"
     private var fileURL : URL {
@@ -73,8 +77,9 @@ class Player: Codable {
         case money, investmentLevels, lastSaveDate
     }
     
-    func loadPlayer() {
+    func loadPlayer() -> UInt {
         let jsonDecoder = JSONDecoder()
+        var offlineProgression : UInt = 0
         var data = Data()
         do {
             data = try Data(contentsOf: fileURL)
@@ -86,33 +91,36 @@ class Player: Codable {
             self.money = savedPlayer.money
             self.investmentLevels = savedPlayer.investmentLevels
             self.lastSaveDate = savedPlayer.lastSaveDate
-            
-            // Calculate offline progression since last save
-            let elapsedTime = min(abs(self.lastSaveDate.timeIntervalSinceNow), MAX_IDLE_TIME)
-            let elapsedGenerationCycles : UInt = UInt(elapsedTime) / 10
-            var moneyGenerated : UInt = 0
-            for (investmentName, investmentLevel) in investmentLevels {
-                switch (investmentName) {
-                case LemonadeStand.title:
-                    moneyGenerated += (LemonadeStand.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
-                case ScalpingBot.title:
-                    moneyGenerated += (ScalpingBot.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
-                case StockTradingAlgorithm.title:
-                    moneyGenerated += (StockTradingAlgorithm.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
-                case CryptoMiner.title:
-                    moneyGenerated += (CryptoMiner.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
-                case StartUp.title:
-                    moneyGenerated += (StartUp.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
-                default:
-                    print("Unexpected investmentName found in Player's saved investments: \(investmentName)")
-                }
-            }
-            
-            self.incrementMoney(amount: moneyGenerated)
-            
+            offlineProgression = self.calcOfflineProgression()
+            self.incrementMoney(amount: offlineProgression)
         } catch {
             print("Cannot decode Player data from the archive.")
         }
+        return offlineProgression
+    }
+    
+    func calcOfflineProgression() -> UInt {
+        let elapsedTime = min(abs(self.lastSaveDate.timeIntervalSinceNow), MAX_IDLE_TIME)
+        let elapsedGenerationCycles : UInt = UInt(elapsedTime) / 10
+        var moneyGenerated : UInt = 0
+        for (investmentName, investmentLevel) in investmentLevels {
+            switch (investmentName) {
+            case LemonadeStand.title:
+                moneyGenerated += (LemonadeStand.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+            case ScalpingBot.title:
+                moneyGenerated += (ScalpingBot.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+            case StockTradingAlgorithm.title:
+                moneyGenerated += (StockTradingAlgorithm.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+            case CryptoMiner.title:
+                moneyGenerated += (CryptoMiner.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+            case StartUp.title:
+                moneyGenerated += (StartUp.calcIncomePerTenSeconds(level: investmentLevel) * elapsedGenerationCycles)
+            default:
+                print("Unexpected investmentName found in Player's saved investments: \(investmentName)")
+            }
+        }
+    
+        return moneyGenerated
     }
     
     func savePlayer() {

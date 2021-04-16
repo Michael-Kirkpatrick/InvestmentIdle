@@ -15,15 +15,23 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let _ = CurrencyFormatter() // Initialize this helper
-        Player.sharedPlayer.loadPlayer()
         
-        let scene = GameScene(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .resizeFill
-        skView.presentScene(scene)
+        
+        let offlineProgression = Player.sharedPlayer.loadPlayer()
+        if offlineProgression > 0 {
+            let scene = OfflineProgressionScene(size: view.bounds.size)
+            scene.setOfflineProgression(offlineProgression: offlineProgression)
+            scene.scaleMode = .resizeFill
+            skView.presentScene(scene)
+        } else {
+            let scene : SKScene = GameScene(size: view.bounds.size)
+            scene.scaleMode = .resizeFill
+            skView.presentScene(scene)
+        }
     }
     
     func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController) {

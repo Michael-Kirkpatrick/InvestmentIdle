@@ -13,6 +13,7 @@ class InvestmentPopup {
     let popupWidthScale : CGFloat = 0.75
     let popupWidthMarginScale : CGFloat = 0.1
     let popupHeightMarginScale : CGFloat = 0.05
+    let buttonTextScale : CGFloat = 0.7
     
     let textHeightScale : CGFloat = 0.07
     
@@ -49,20 +50,22 @@ class InvestmentPopup {
         frameSize.height *= (1-popupHeightMarginScale)
         frameSize.width *= (1-popupWidthMarginScale)
         
+        spaceToFit = CGSize(width: frameSize.width, height: frameSize.height * textHeightScale)
+        
+        let closeButtonBackground = SKShapeNode(rectOf: CGSize(width: spaceToFit.width / 2, height: spaceToFit.height))
+        closeButtonBackground.fillColor = SKColor.gray
+        closeButtonBackground.position = CGPoint(x: 0, y: -frameSize.height / 2 + frameSize.height * popupHeightMarginScale)
+        closeButtonBackground.strokeColor = SKColor.black
+        closeButtonBackground.name = closeButtonName
+        innerFrame.addChild(closeButtonBackground)
+        
         let closeButton = SKLabelNode(text: "Close")
         closeButton.fontColor = SKColor.black
         closeButton.fontName = fontName
-        spaceToFit = CGSize(width: frameSize.width, height: frameSize.height * textHeightScale)
-        closeButton.fontSize *= UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: closeButton.frame.size)
-        closeButton.position = CGPoint(x: 0, y: -frameSize.height / 2)
-        closeButton.name = closeButtonName
-        innerFrame.addChild(closeButton)
-        
-        let closeButtonBackground = SKShapeNode(rectOf: CGSize(width: closeButton.frame.width * 1.2, height: closeButton.frame.height * 1.2))
-        closeButtonBackground.fillColor = SKColor.gray
-        closeButtonBackground.position = CGPoint(x: 0, y: closeButton.frame.height / 2)
-        closeButtonBackground.strokeColor = SKColor.black
-        closeButton.addChild(closeButtonBackground)
+        closeButton.fontSize *= UIHelper.getFontScale(spaceToFit: CGSize(width: closeButtonBackground.frame.width * buttonTextScale, height: closeButtonBackground.frame.height * buttonTextScale), labelToFit: closeButton.frame.size)
+        closeButton.position = CGPoint(x: 0, y: 0)
+        closeButton.verticalAlignmentMode = .center
+        closeButtonBackground.addChild(closeButton)
         
         title = SKLabelNode(text: "Lemonade Stand")
         title.fontColor = SKColor.black
@@ -90,7 +93,7 @@ class InvestmentPopup {
         innerFrame.addChild(upgradeCost)
         yOffset += upgradeCost.frame.height + popupHeightMarginScale * frameSize.height
         
-        let upgradeButton = SKShapeNode(rectOf: CGSize(width: spaceToFit.width * 0.8, height: spaceToFit.height))
+        let upgradeButton = SKShapeNode(rectOf: CGSize(width: spaceToFit.width / 2, height: spaceToFit.height))
         upgradeButton.fillColor = SKColor.gray
         upgradeButton.position = CGPoint(x: 0, y: frameSize.height / 2 - yOffset - upgradeButton.frame.height / 2)
         upgradeButton.strokeColor = SKColor.black
@@ -101,7 +104,7 @@ class InvestmentPopup {
         let upgradeButtonLabel = SKLabelNode(text: "Upgrade")
         upgradeButtonLabel.fontColor = SKColor.black
         upgradeButtonLabel.fontName = fontName
-        upgradeButtonLabel.fontSize *= UIHelper.getFontScale(spaceToFit: CGSize(width: spaceToFit.width * 0.8, height: spaceToFit.height * 0.8), labelToFit: level.frame.size)
+        upgradeButtonLabel.fontSize *= UIHelper.getFontScale(spaceToFit: CGSize(width: upgradeButton.frame.width * buttonTextScale, height: upgradeButton.frame.height * buttonTextScale), labelToFit: upgradeButtonLabel.frame.size)
         upgradeButtonLabel.position = CGPoint(x: 0, y: 0)
         upgradeButtonLabel.verticalAlignmentMode = .center
         upgradeButton.addChild(upgradeButtonLabel)

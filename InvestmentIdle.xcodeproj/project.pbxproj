@@ -25,6 +25,7 @@
 		B4C447BC261A53A200BB0DCA /* Investment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C447BB261A53A200BB0DCA /* Investment.swift */; };
 		B4C447BF261A576800BB0DCA /* LemonadeStand.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C447BE261A576800BB0DCA /* LemonadeStand.swift */; };
 		B4C447C2261A77BF00BB0DCA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C447C1261A77BF00BB0DCA /* Player.swift */; };
+		B4FA9C2C262A0B69006C8711 /* OfflineProgressionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FA9C2B262A0B69006C8711 /* OfflineProgressionScene.swift */; };
 		B4FC3C2626277D440076CB07 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FC3C2526277D440076CB07 /* CurrencyFormatter.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		B4C447BB261A53A200BB0DCA /* Investment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Investment.swift; sourceTree = "<group>"; };
 		B4C447BE261A576800BB0DCA /* LemonadeStand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LemonadeStand.swift; sourceTree = "<group>"; };
 		B4C447C1261A77BF00BB0DCA /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		B4FA9C2B262A0B69006C8711 /* OfflineProgressionScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineProgressionScene.swift; sourceTree = "<group>"; };
 		B4FC3C2526277D440076CB07 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 				B4C447BE261A576800BB0DCA /* LemonadeStand.swift */,
 				84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */,
 				B4C447A8261A2CCC00BB0DCA /* GameViewController.swift */,
+				B4FA9C2B262A0B69006C8711 /* OfflineProgressionScene.swift */,
 				B4C447AA261A2CCC00BB0DCA /* Main.storyboard */,
 				B4C447AD261A2CCD00BB0DCA /* Assets.xcassets */,
 				B4C447AF261A2CCD00BB0DCA /* Info.plist */,
@@ -191,6 +194,7 @@
 				B4C447A9261A2CCC00BB0DCA /* GameViewController.swift in Sources */,
 				B4C447C2261A77BF00BB0DCA /* Player.swift in Sources */,
 				B4C447A1261A2CCC00BB0DCA /* AppDelegate.swift in Sources */,
+				B4FA9C2C262A0B69006C8711 /* OfflineProgressionScene.swift in Sources */,
 				B43B9F192624DFEA00F9910A /* UIHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
