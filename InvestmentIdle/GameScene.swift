@@ -189,7 +189,8 @@ class GameScene: SKScene {
                     UIHelper.simulateButtonPressAsync(button: background, codeToRun: {
                         self.upgradeInProgress = true // Prevent button from registering to level up until all models/views are up to date again
                         let currentInvestment = self.investmentPopup?.currentDisplayedInvestment
-                        if let _ = currentInvestment?.levelUp() {
+                        let levelledUp = currentInvestment?.levelUp()
+                        if levelledUp ?? false {
                             self.investmentPopup?.updateLabels(investment: currentInvestment!)
                             UIHelper.updateHeaderLabel()
                             let frame = self.childNode(withName: currentInvestment!.title)
