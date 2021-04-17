@@ -34,26 +34,32 @@ class GameCenter {
                 return
             }
             self.isGameCenterEnabled = true
+            self.displayLeaderboard(gameVC: presentingVC as! GameViewController)
         }
     }
     
     func updateScore(with value: Int) {
-        self.leaderboard?.submitScore(value, context: value, player: GKLocalPlayer.local) {error in
+        GKLeaderboard.submitScore(value, context: value, player: GKLocalPlayer.local, leaderboardIDs: [self.leaderboardID], completionHandler: {error in
             if error != nil {
                 print("Error updating score -- \(error!)")
             }
+        })
+    }
+    
+    func displayLeaderboard(gameVC: GameViewController) {
+        if (!GameCenter.shared.isGameCenterEnabled) {
+            authenticateLocalPlayer(presentingVC: gameVC)
+        }
+        else {
+            self.updateScore(with: Int(Player.sharedPlayer.getMoney()))
+            let gcVC = GKGameCenterViewController(state: .leaderboards)
+            gcVC.gameCenterDelegate = gameVC
+            gameVC.displayGameCenterLeaderboards(gcVC: gcVC)
         }
     }
     
     func displayLeaderboard(scene: SKScene) {
         let gameVC = scene.view!.window!.rootViewController as! GameViewController
-        if (!GameCenter.shared.isGameCenterEnabled) {
-            authenticateLocalPlayer(presentingVC: gameVC)
-        }
-        if (GameCenter.shared.isGameCenterEnabled) {
-            let gcVC = GKGameCenterViewController(state: .leaderboards)
-            gcVC.gameCenterDelegate = gameVC
-            gameVC.displayGameCenterLeaderboards(gcVC: gcVC)
-        }
+        self.displayLeaderboard(gameVC: gameVC)
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84606562262B827300BE4B8F /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84606561262B827300BE4B8F /* GameKit.framework */; };
 		847A93B3262764F80050FBED /* GameCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847A93B2262764F80050FBED /* GameCenter.swift */; };
 		84A2C8C82624D9E2004A34AD /* CryptoMiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */; };
 		84A2C8CF2624DB6B004A34AD /* StockTradingAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		84606561262B827300BE4B8F /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		847A93B2262764F80050FBED /* GameCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenter.swift; sourceTree = "<group>"; };
 		84A2C8C72624D9E2004A34AD /* CryptoMiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoMiner.swift; sourceTree = "<group>"; };
 		84A2C8CE2624DB6B004A34AD /* StockTradingAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTradingAlgorithm.swift; sourceTree = "<group>"; };
@@ -59,17 +61,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84606562262B827300BE4B8F /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84606560262B827300BE4B8F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84606561262B827300BE4B8F /* GameKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B4C44794261A2CCC00BB0DCA = {
 			isa = PBXGroup;
 			children = (
 				B4C4479F261A2CCC00BB0DCA /* InvestmentIdle */,
 				B4C4479E261A2CCC00BB0DCA /* Products */,
+				84606560262B827300BE4B8F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -335,13 +347,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = P5T35W85N6;
+				DEVELOPMENT_TEAM = F5Y28X7C35;
 				INFOPLIST_FILE = InvestmentIdle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kirk0714-dind4950.InvestmentIdle";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockinvd.investmentidle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -354,13 +366,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = P5T35W85N6;
+				DEVELOPMENT_TEAM = F5Y28X7C35;
 				INFOPLIST_FILE = InvestmentIdle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "kirk0714-dind4950.InvestmentIdle";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rockinvd.investmentidle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
