@@ -112,9 +112,10 @@ class GameScene: SKScene {
         levelLabel.name = investment.title + levelLabelNameSuffix
         
         levelLabel.fontSize *= UIHelper.getFontScale(spaceToFit: spaceToFit, labelToFit: levelLabel.frame.size)
-        let xPosition = -frameSize.width / 2 + frameSize.width * (investmentItemSpacingScale / 2) + levelLabel.frame.width / 2
+        let xPosition = -frameSize.width / 2 + frameSize.width * (investmentItemSpacingScale / 2)
         levelLabel.position = CGPoint(x: xPosition, y: 0)
         levelLabel.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
+        levelLabel.horizontalAlignmentMode = .left
         frame.addChild(levelLabel)
         // LEVEL LABEL END
         
